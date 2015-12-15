@@ -1,0 +1,5 @@
+#!/bin/bash
+if ! echo $PATH|grep "/opt/esgf/virtual" >/dev/null; then 
+	export PATH=/opt/esgf/virtual/python/bin:$PATH;
+	export LD_LIBRARY_PATH=/opt/esgf/python/lib;
+fi
