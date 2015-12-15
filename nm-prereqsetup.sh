@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /root/nm-work/setlocalpaths
+source ./setlocalpaths
 pip install django
 pip install sqlalchemy
 pip install psycopg2
