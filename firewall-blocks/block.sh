@@ -20,7 +20,7 @@ Enter fqdn of node to block, or
 q to quit without blocking any node, or
 s to save and quit with your choices.
 EOF
-	read inp;
+	read -e inp;
 	if [ "$inp" = 'q' -o "$inp" = "all" -o "$inp" = 's' ]; then
 		break;
 	fi
