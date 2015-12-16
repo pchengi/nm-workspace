@@ -1,0 +1,2 @@
+iptables -A FILTER -s esg-idx.demonet.local -j DROP
+iptables -A FILTER -s esg-idx2.demonet.local -j DROP
