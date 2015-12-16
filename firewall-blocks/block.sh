@@ -33,7 +33,7 @@ EOF
 				clear;
 				continue;
 			fi
-			echo "iptables -A INPUT -s $inp -j DROP" >>iptables-blocks;
+			echo "iptables -A INPUT -s $inp -j REJECT" >>iptables-blocks;
 		fi
 	else
 		clear;
