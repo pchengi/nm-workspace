@@ -26,17 +26,19 @@ EOF
 	fi
 	if grep -w "$inp" allnodes >/dev/null; then
 		if grep -w "$inp" iptables-blocks >/dev/null; then
+			clear;
 			continue;
 		else
 			if [ "$inp" = "$HOSTNAME" ]; then
+				clear;
 				continue;
 			fi
 			echo "iptables -A INPUT -s $inp -j DROP" >>iptables-blocks;
 		fi
 	else
+		clear;
 		continue;
 	fi
-	
 	clear;
 done
 if [ "$inp" = 'q' ]; then
