@@ -28,6 +28,9 @@ EOF
 		if grep -w "$inp" iptables-blocks >/dev/null; then
 			continue;
 		else
+			if [ "$inp" = "$HOSTNAME" ]; then
+				continue;
+			fi
 			echo "iptables -A INPUT -s $inp -j DROP" >>iptables-blocks;
 		fi
 	else
