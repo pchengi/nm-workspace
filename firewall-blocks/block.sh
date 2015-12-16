@@ -28,7 +28,7 @@ EOF
 		if grep -w "$inp" iptables-blocks >/dev/null; then
 			continue;
 		else
-			echo "iptables -A FILTER -s $inp -j DROP" >>iptables-blocks;
+			echo "iptables -A INPUT -s $inp -j DROP" >>iptables-blocks;
 		fi
 	else
 		continue;
@@ -46,7 +46,7 @@ if [ "$inp" = "all" ]; then
 		if [ "$ln" = "$HOSTNAME" ]; then
 			continue;
 		fi
-		echo "iptables -A FILTER -s $ln -j DROP" >>iptables-blocks;
+		echo "iptables -A INPUT -s $ln -j DROP" >>iptables-blocks;
 	done <allnodes
 	run_firewall
 fi
