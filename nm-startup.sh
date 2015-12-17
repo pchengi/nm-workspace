@@ -1,7 +1,11 @@
 #!/bin/bash
+
+have_esgf=0
 git pull
 source ./setlocalpaths
-bash nm-cleanup.sh
+if [ $have_esgf -eq 0 ]; then
+	bash nm-cleanup.sh;
+fi
 bash nm-prereqsetup.sh
 mkdir -p /esg/config /esg/tasks /esg/log
 if [ ! -e /esg/config/esgf.properties ]; then
