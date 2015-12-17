@@ -1,0 +1,55 @@
+{
+    "links": [
+        {
+            "from": "1",
+            "speed": -1.0,
+            "status": "down",
+            "to": "2"
+        },
+        {
+            "from": "1",
+            "speed": -1.0,
+            "status": "down",
+            "to": "3"
+        },
+        {
+            "from": "2",
+            "speed": 0,
+            "status": "unverified",
+            "to": "3"
+        }
+    ],
+    "membernodes": [
+        {
+            "members": [],
+            "supernode": "1"
+        },
+        {
+            "members": [],
+            "supernode": "2"
+        },
+        {
+            "members": [],
+            "supernode": "3"
+        }
+    ],
+    "supernodes": [
+        {
+            "health": "new",
+            "hostname": "esg-idx.demonet.local",
+            "id": "1"
+        },
+        {
+            "health": "new",
+            "hostname": "esg-idx2.demonet.local",
+            "id": "2"
+        },
+        {
+            "health": "new",
+            "hostname": "esg-data.demonet.local",
+            "id": "3"
+        }
+    ],
+    "total_membernodes": 0,
+    "total_supernodes": 3
+}
