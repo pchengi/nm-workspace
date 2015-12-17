@@ -1,6 +1,6 @@
 #!/bin/bash
 source nm-helper.sh
-esg_dist_url='http://esg-dn2.nsc.liu.se/esgf'
+esg_dist_url='http://esg-dn2.nsc.liu.se/esgf/dist'
 setup_ca(){
 	mkdir -p /etc/tempcerts;
 	pushd /etc/tempcerts && rm -rf CA; rm -f *.pem; rm -f *.gz; rm -f *.ans; rm -f *.tmpl
