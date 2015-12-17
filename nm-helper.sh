@@ -130,8 +130,3 @@ setup_apache_frontend(){
 	chkconfig --levels 345 httpd off
 	popd; popd
 }
-
-
-
-	
-}
