@@ -1,7 +1,7 @@
 #!/bin/bash
 git pull
 source ./setlocalpaths
-bash rm-cleanup.sh
+bash nm-cleanup.sh
 mkdir -p /esg/config /esg/tasks /esg/log
 if [ ! -e /esg/config/esgf.properties ]; then
 	echo "does not exist.  Will use defaults";
