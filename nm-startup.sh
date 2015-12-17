@@ -2,6 +2,7 @@
 git pull
 source ./setlocalpaths
 bash nm-cleanup.sh
+bash nm-prereqsetup.sh
 mkdir -p /esg/config /esg/tasks /esg/log
 if [ ! -e /esg/config/esgf.properties ]; then
 	echo "does not exist.  Will use defaults";
