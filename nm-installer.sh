@@ -1,6 +1,6 @@
 #!/bin/bash
 source nm-helper.sh
-esg_dist_url='http://esg-dn2.nsc.liu.se/esgf/dist'
+esg_dist_url_root='http://esg-dn2.nsc.liu.se/esgf/dist'
 hostname=`hostname -f`;
 setup_ca(){
 	mkdir -p /etc/tempcerts;
@@ -16,13 +16,13 @@ setup_ca(){
 	replstr='default_days\t= 30\t\t\t# how long to certify for'
 	subststr='default_days\t= 365\t\t\t# how long to certify for'
 	quotedreplstr=`echo $replstr|sed 's/[./*?|#\t]/\\\\&/g'`;
-	quotedsubststr=`echo $subststr|sed 's/[./*?|# ]/\\\\&/g'`;
-	replstr2='"-days 30";\t# 30 days'
-	subststr2='"-days 365";\t# 365 days'
-	quotedreplstr2=`echo $replstr2|sed 's/[./*?|#\t]/\\\\&/g'`;
-	quotedsubststr2=`echo $subststr2|sed 's/[./*?|# ]/\\\\&/g'`;
+	quotedsubststr=`echo $subststr|sed 's/[./*?|#\t]/\\\\&/g'`;
+	repl2str='"-days 30";\t# 30 days'
+	subst2str='"-days 365";\t# 365 days'
+	quoted2replstr=`echo $repl2str|sed 's/[./*?|#\t"]/\\\\&/g'`;
+	quoted2subststr=`echo $subst2str|sed 's/[./*?|#\t"]/\\\\&/g'`;
 	sed -i "s/$quotedreplstr/$quotedsubststr/g" openssl.cnf
-	sed -i "s/$quotedreplstr2/$quotedsubststr2/g" CA.pl
+	sed -i "s/$quoted2replstr/$quoted2subststr/g" CA.pl
 	perl CA.pl -newca <setupca.ans
 	openssl rsa -in CA/private/cakey.pem -out clearkey.pem -passin pass:placeholderpass && mv clearkey.pem CA/private/cakey.pem
 	perl CA.pl -newreq-nodes <reqhost.ans
