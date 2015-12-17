@@ -1,6 +1,7 @@
 #!/bin/bash
 source nm-helper.sh
 esg_dist_url='http://esg-dn2.nsc.liu.se/esgf/dist'
+hostname=`hostname -f`;
 setup_ca(){
 	mkdir -p /etc/tempcerts;
 	pushd /etc/tempcerts && rm -rf CA; rm -f *.pem; rm -f *.gz; rm -f *.ans; rm -f *.tmpl
@@ -16,7 +17,12 @@ setup_ca(){
 	subststr='default_days\t= 365\t\t\t# how long to certify for'
 	quotedreplstr=`echo $replstr|sed 's/[./*?|#\t]/\\\\&/g'`;
 	quotedsubststr=`echo $subststr|sed 's/[./*?|# ]/\\\\&/g'`;
+	replstr2='"-days 30";\t# 30 days'
+	subststr2='"-days 365";\t# 365 days'
+	quotedreplstr2=`echo $replstr2|sed 's/[./*?|#\t]/\\\\&/g'`;
+	quotedsubststr2=`echo $subststr2|sed 's/[./*?|# ]/\\\\&/g'`;
 	sed -i "s/$quotedreplstr/$quotedsubststr/g" openssl.cnf
+	sed -i "s/$quotedreplstr2/$quotedsubststr2/g" CA.pl
 	perl CA.pl -newca <setupca.ans
 	openssl rsa -in CA/private/cakey.pem -out clearkey.pem -passin pass:placeholderpass && mv clearkey.pem CA/private/cakey.pem
 	perl CA.pl -newreq-nodes <reqhost.ans
