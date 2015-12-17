@@ -1,6 +1,7 @@
 #!/bin/bash
-
+git pull
 source ./setlocalpaths
+bash rm-cleanup.sh
 mkdir -p /esg/config /esg/tasks /esg/log
 if [ ! -e /esg/config/esgf.properties ]; then
 	echo "does not exist.  Will use defaults";
@@ -12,3 +13,8 @@ if [ ! -e /esg/config/esgf.properties ]; then
 	cp esgf_nodemgr_map.json /esg/config/
 	echo 0 >/esg/config/config_type
 fi
+pushd  /root/esgf-nodemgr-doc/code
+git pull
+bash run_server.sh
+popd
+
