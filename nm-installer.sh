@@ -58,8 +58,8 @@ setup_ca(){
 	popd
 }
 
-if env|grep HAS_ESGF >/dev/null; then
-	if [ $HAS_ESGF -eq 0 ]; then 
+if env|grep NO_ESGF >/dev/null; then
+	if [ $NO_ESGF -eq 1 ]; then 
 		echo "Explicitly set to NO ESGF";
 		setup_ca
 	fi
