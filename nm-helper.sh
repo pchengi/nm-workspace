@@ -116,8 +116,8 @@ setup_apache_frontend(){
 	mkdir /root/apache_frontend;
 	pushd /root/apache_frontend
 	git clone https://github.com/ESGF/apache-frontend.git;
-	git checkout nm;
 	pushd apache-frontend
+	git checkout nm;
 	tmpservername='placeholder.fqdn'
 	servername=`hostname -f`;
 	quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
