@@ -123,6 +123,7 @@ setup_apache_frontend(){
 	quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
 	quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
 	cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
+	cp etc/certs/esgf-ca-bundle.crt /etc/certs/
 	sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
 	bash setup_python.sh "na" "na"
 	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
