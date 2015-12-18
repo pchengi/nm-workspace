@@ -133,4 +133,7 @@ setup_apache_frontend(){
 	chown -R apache:apache /opt/esgf/flaskdemo/demo
 	chkconfig --levels 345 httpd off
 	popd; popd
+	pushd /usr/local
+	git clone https://github.com/pchengi/esgf-nodemgr-doc.git
+	popd
 }
