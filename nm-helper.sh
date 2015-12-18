@@ -128,6 +128,9 @@ setup_apache_frontend(){
 	bash setup_python.sh "na" "na"
 	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
 	cp etc/init.d/nm-httpd /etc/init.d/
+	mkdir -p /opt/esgf/flaskdemo/demo
+	cp wsgi/demo/* /opt/esgf/flaskdemo/demo
+	chown -R apache:apache /opt/esgf/flaskdemo/demo
 	chkconfig --levels 345 httpd off
 	popd; popd
 }

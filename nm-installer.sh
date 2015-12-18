@@ -8,6 +8,7 @@ if env|grep NO_ESGF >/dev/null; then
 		echo "Explicitly set to NO ESGF";
 		setup_ca
 		setup_apache_frontend
+		rm -rf apache_frontend
 	fi
 
 else
