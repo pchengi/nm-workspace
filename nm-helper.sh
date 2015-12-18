@@ -135,19 +135,21 @@ setup_apache_frontend(){
 	popd; popd
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
+	quotedinstdir=`echo $INSTDIR|sed 's/[./*?|#\t]/\\\\&/g'`
+
 	NM_DIR=$INST_DIR/esgf-nodemgr-doc/code
-	PREFIX=__PREFIX__
+	PREFIX=__prefix__
 	pushd $INST_DIR
 	git clone https://github.com/pchengi/esgf-nodemgr-doc.git
 	popd
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$INST_DIR\2/" $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/esgf-nm-ctl
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$INST_DIR\2/" $NM_DIR/esgfnmd.tmpl > $NM_DIR/esgfnmd
+	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/bin/esgf-nm-ctl
+	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_DIR/esgfnmd.tmpl > $NM_DIR/esgfnmd
 	adduser nodemgr
+	mkdir -p /esg/log /esg/tasks /esg/config
 	touch /esg/log/django.log
 	touch /esg/log/esgf_nm.log
 	touch /esg/log/esgf_nm_dj.log
-	chown nodemgr /esg/log/esgf_nm.log
-	chown apache /esg/log/esgf_nm_dj.log
-	chown apache /esg/log/django.log
-	
-}
+	chown nodemgr:nodemgr /esg/log/esgf_nm.log
+	chown apache:apache /esg/log/esgf_nm_dj.log
+	chown apache:apache /esg/log/django.log
+	}
