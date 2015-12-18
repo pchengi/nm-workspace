@@ -135,18 +135,19 @@ setup_apache_frontend(){
 	popd; popd
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
-	quotedinstdir=`echo $INSTDIR|sed 's/[./*?|#\t]/\\\\&/g'`
+	quotedinstdir=`echo $INST_DIR|sed 's/[./*?|#\t]/\\\\&/g'`
 
 	NM_DIR=$INST_DIR/esgf-nodemgr-doc/code
 	PREFIX=__prefix__
 	pushd $INST_DIR
 	git clone https://github.com/pchengi/esgf-nodemgr-doc.git
 	popd
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/bin/esgf-nm-ctl
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_DIR/esgfnmd.tmpl > $NM_DIR/esgfnmd
+	sedcmd="sed s/$PREFIX/$quotedinstdir/"
+	$sedcmd $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/bin/esgf-nm-ctl
+	$sedcmd $NM_DIR/esgfnmd.tmpl > $NM_DIR/esgfnmd
 	NM_WSGI_DIR=$NM_DIR/server/nodemgr/apache
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_WSGI_DIR/wsgi.py.tmpl >  $NM_WSGI_DIR/wsgi.py
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
+	$sedcmd $NM_WSGI_DIR/wsgi.py.tmpl >  $NM_WSGI_DIR/wsgi.py
+	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
 
 	adduser nodemgr
 	mkdir -p /esg/log /esg/tasks /esg/config
