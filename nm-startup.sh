@@ -3,9 +3,7 @@
 
 git pull
 source ./setlocalpaths
-if env|grep NO_ESGF > /dev/null ; then
-	bash nm-cleanup.sh;
-fi
+
 bash nm-prereqsetup.sh
 mkdir -p /esg/config /esg/tasks /esg/log
 if [ ! -e /esg/config/esgf.properties ]; then
