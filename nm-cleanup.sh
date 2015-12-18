@@ -11,6 +11,11 @@ if env|grep NO_ESGF >/dev/null; then
 			rm -f /etc/httpd/conf/nm-httpd.conf
 			rm -f /etc/init.d/nm-httpd
 			rm -rf /opt/esgf
+			rm -f /usr/local/bin/esgf-nm-ctl
+			rm -rf /usr/local/esgf-nodemgr-doc
+			rm -f /esg/log/esgf_nm.log
+			rm -f /esg/log/esgf_nm_dj.log
+			rm -f /esg/log/django.log
 		fi
 	fi
 else
@@ -18,5 +23,6 @@ else
 	rm -rf /esg/tasks
 	rm -f /esg/config/esgf_nodemgr_map.json
 	rm -f /esg/config/nm.properties
+	
 fi
 
