@@ -145,8 +145,8 @@ setup_apache_frontend(){
 	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/bin/esgf-nm-ctl
 	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_DIR/esgfnmd.tmpl > $NM_DIR/esgfnmd
 	NM_WSGI_DIR=$NM_DIR/server/nodemgr/apache
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_WSGI_DIR/wsgi.py.templ >  $NM_WSGI_DIR/wsgi.py
-	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_WSGI_DIR/django.wsgi.templ >  $NM_WSGI_DIR/django.wsgi
+	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_WSGI_DIR/wsgi.py.tmpl >  $NM_WSGI_DIR/wsgi.py
+	sed "s/\(.*\)$PREFIX\(.*\)/\1$quotedinstdir\2/" $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
 
 	adduser nodemgr
 	mkdir -p /esg/log /esg/tasks /esg/config
