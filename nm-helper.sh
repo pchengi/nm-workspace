@@ -133,7 +133,21 @@ setup_apache_frontend(){
 	chown -R apache:apache /opt/esgf/flaskdemo/demo
 	chkconfig --levels 345 httpd off
 	popd; popd
-	pushd /usr/local
+	# this can be integrated into the installer
+	INST_DIR=/usr/local
+	NM_DIR=$INST_DIR/esgf-nodemgr-doc/code
+	PREFIX=__PREFIX__
+	pushd $INST_DIR
 	git clone https://github.com/pchengi/esgf-nodemgr-doc.git
 	popd
+	sed "s/\(.*\)$PREFIX\(.*\)/\1$INST_DIR\2/" $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/esgf-nm-ctl
+	sed "s/\(.*\)$PREFIX\(.*\)/\1$INST_DIR\2/" $NM_DIR/esgfnmd.tmpl > $NM_DIR/esgfnmd
+	adduser nodemgr
+	touch /esg/log/django.log
+	touch /esg/log/esgf_nm.log
+	touch /esg/log/esgf_nm_dj.log
+	chown nodemgr /esg/log/esgf_nm.log
+	chown apache /esg/log/esgf_nm_dj.log
+	chown apache /esg/log/django.log
+	
 }

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-have_esgf=0
+
 git pull
 source ./setlocalpaths
-if [ $have_esgf -eq 0 ]; then
+if env|grep NO_ESGF > /dev/null ; then
 	bash nm-cleanup.sh;
 fi
 bash nm-prereqsetup.sh
@@ -20,6 +20,8 @@ fi
 cp esgf_nodemgr_map.json /esg/config/
 pushd  /root/esgf-nodemgr-doc/code
 git pull
-bash run_server.sh
+#bash run_server.sh
+service nm-httpd start
+/usr/local/bin/esgf-nm-ctl start
 popd
 
