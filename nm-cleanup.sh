@@ -5,7 +5,7 @@ if env|grep NO_ESGF >/dev/null; then
 		echo "Explicitly set to NO ESGF";
 		rm -rf /esg
 		if [ "$1" = "full" ]; then
-			yum remove postgresql-devel postgresql postgresql-server postgresql-libs
+			yum -y remove postgresql-devel postgresql postgresql-server postgresql-libs
 			rm -rf /etc/tempcerts
 			rm -rf /etc/certs
 			rm -f /etc/httpd/conf/nm-httpd.conf
