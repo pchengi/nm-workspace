@@ -150,6 +150,8 @@ setup_apache_frontend(){
 	$sedcmd $NM_WSGI_DIR/wsgi.py.tmpl >  $NM_WSGI_DIR/wsgi.py
 	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
 
+	chmod u+r $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
+
 	adduser nodemgr
 	mkdir -p /esg/log /esg/tasks /esg/config
 	touch /esg/log/django.log
@@ -165,6 +167,8 @@ setup_apache_frontend(){
 	chown nodemgr:nodemgr /esg/log/esgfnmd.err.log
 	chown nodemgr:nodemgr /esg/config/nm.properties
 	chown nodemgr:nodemgr /esg/config/registration.xml
+	chown nodemgr:nodemgr $NM_DIR/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
+
 	}

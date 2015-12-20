@@ -1,5 +1,8 @@
 #!/bin/bash
 
+service nm-httpd stop
+/usr/local/bin/esgf-nm-ctl stop
+
 if env|grep NO_ESGF >/dev/null; then
 	if [ $NO_ESGF -eq 1 ]; then
 		echo "Explicitly set to NO ESGF";
