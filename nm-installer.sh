@@ -27,4 +27,5 @@ bash nm-prereqsetup.sh
 setup_nm_conf
 if [ ! -s /esg/config/esgf_nodemgr_map.json ]; then
 	cp esgf_nodemgr_map.json /esg/config/
+	chown nodemgr:nodemgr /esg/config/esgf_nodemgr_map.json
 fi
