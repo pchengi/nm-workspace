@@ -118,12 +118,6 @@ setup_apache_frontend(){
 	git clone https://github.com/ESGF/apache-frontend.git;
 	pushd apache-frontend
 	git checkout nm;
-	tmpservername='placeholder.fqdn'
-	servername=`hostname -f`;
-	quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
-	quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
-	cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
-	cp etc/certs/esgf-ca-bundle.crt /etc/certs/
 
 	bash setup_python.sh "na" "na"
 	mkdir -p /opt/esgf/flaskdemo/demo
@@ -145,6 +139,13 @@ setup_nm_conf(){
 		git checkout nm;
 		git pull;
 	fi
+	
+	tmpservername='placeholder.fqdn'
+	servername=`hostname -f`;
+	quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
+	quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
+	cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
+	cp etc/certs/esgf-ca-bundle.crt /etc/certs/
 		
 	sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
 	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
@@ -185,6 +186,6 @@ setup_nm_conf(){
 	chown nodemgr:nodemgr $NM_DIR/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
-	rm -rf /root/apache_frontend
+	#rm -rf /root/apache_frontend
 
 }
