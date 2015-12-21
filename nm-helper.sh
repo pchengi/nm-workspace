@@ -151,7 +151,7 @@ setup_apache_frontend(){
 	$sedcmd $NM_WSGI_DIR/wsgi.py.tmpl >  $NM_WSGI_DIR/wsgi.py
 	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
 
-	chmod u+r $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
+	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
 
 	adduser nodemgr
 	mkdir -p /esg/log /esg/tasks /esg/config
