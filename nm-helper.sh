@@ -131,13 +131,25 @@ setup_apache_frontend(){
 	chown -R apache:apache /opt/esgf/flaskdemo/demo
 	chkconfig --levels 345 httpd off
 	popd; popd
-	rm -rf /root/apache_frontend
 }
 setup_nm_conf(){
+
+	if [ ! -d /root/apache_frontend/apache-frontend ]; then
+		mkdir /root/apache_frontend;
+		pushd /root/apache_frontend
+		git clone https://github.com/ESGF/apache-frontend.git;
+		pushd apache-frontend
+		git checkout nm;
+	else
+		pushd /root/apache_frontend/apache-frontend;
+		git checkout nm;
+		git pull;
+	fi
+		
 	sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
 	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
 	cp etc/init.d/nm-httpd /etc/init.d/
-
+	popd; popd;
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
 	quotedinstdir=`echo $INST_DIR|sed 's/[./*?|#\t]/\\\\&/g'`
@@ -173,5 +185,6 @@ setup_nm_conf(){
 	chown nodemgr:nodemgr $NM_DIR/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
+	rm -rf /root/apache_frontend
 
 }
