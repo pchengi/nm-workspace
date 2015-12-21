@@ -124,21 +124,23 @@ setup_apache_frontend(){
 	quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
 	cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
 	cp etc/certs/esgf-ca-bundle.crt /etc/certs/
-	sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
+
 	bash setup_python.sh "na" "na"
-	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
-	cp etc/init.d/nm-httpd /etc/init.d/
 	mkdir -p /opt/esgf/flaskdemo/demo
 	cp wsgi/demo/* /opt/esgf/flaskdemo/demo
 	chown -R apache:apache /opt/esgf/flaskdemo/demo
 	chkconfig --levels 345 httpd off
 	popd; popd
 	rm -rf /root/apache_frontend
+}
+setup_nm_conf(){
+	sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
+	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
+	cp etc/init.d/nm-httpd /etc/init.d/
 
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
 	quotedinstdir=`echo $INST_DIR|sed 's/[./*?|#\t]/\\\\&/g'`
-
 	NM_DIR=$INST_DIR/esgf-nodemgr-doc/code
 	PREFIX=__prefix__
 	pushd $INST_DIR
@@ -150,9 +152,7 @@ setup_apache_frontend(){
 	NM_WSGI_DIR=$NM_DIR/server/nodemgr/apache
 	$sedcmd $NM_WSGI_DIR/wsgi.py.tmpl >  $NM_WSGI_DIR/wsgi.py
 	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
-
 	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
-
 	adduser nodemgr
 	mkdir -p /esg/log /esg/tasks /esg/config
 	touch /esg/log/django.log
@@ -163,8 +163,6 @@ setup_apache_frontend(){
 	touch /esg/config/nm.properties
 	touch /esg/config/registration.xml
 	touch /esg/config/timestore
-
-
 	chown nodemgr:nodemgr /esg/log/esgf_nm.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.out.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.err.log
@@ -176,4 +174,4 @@ setup_apache_frontend(){
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
 
-	}
+}

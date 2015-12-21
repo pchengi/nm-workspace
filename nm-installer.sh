@@ -15,3 +15,4 @@ else
 	echo "There IS ESGF. Tread with care.";
 fi
 bash nm-prereqsetup.sh
+setup_nm_conf

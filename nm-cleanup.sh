@@ -17,15 +17,18 @@ if env|grep NO_ESGF >/dev/null; then
 	fi
 else
 	echo "There IS ESGF. Tread with care.";
-	rm -rf /esg/tasks
 	rm -f /esg/config/esgf_nodemgr_map.json
 	rm -f /esg/config/nm.properties
-	rm -f /esg/log/esgf_nm.log
-	rm -f /esg/log/esgf_nm_dj.log
+	rm -f /esg/config/registration.xml
+	rm -f /esg/config/timestore
 	rm -f /esg/log/django.log
+	rm -f /esg/log/esgfnmd.err.log
+	rm -f /esg/log/esgf_nm_dj.log
+	rm -f /esg/log/esgfnmd.out.log
+	rm -f /esg/log/esgf_nm.log
 	rm -f /etc/httpd/conf/nm-httpd.conf
 	rm -f /etc/init.d/nm-httpd
 	rm -f /usr/local/bin/esgf-nm-ctl
-	
+	rm -rf /esg/tasks
 fi
 
