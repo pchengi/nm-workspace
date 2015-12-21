@@ -140,25 +140,32 @@ setup_nm_conf(){
 		git checkout nm;
 		git pull;
 	fi
-	
-	tmpservername='placeholder.fqdn'
-	servername=`hostname -f`;
-	quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
-	quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
-	cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
-	cp etc/certs/esgf-ca-bundle.crt /etc/certs/
+
+	if env|grep NO_ESGF >/dev/null; then
+		if [ $NO_ESGF -eq 1 ]; then
+			tmpservername='placeholder.fqdn'
+			servername=`hostname -f`;
+			quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
+			quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
+			cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
+			cp etc/certs/esgf-ca-bundle.crt /etc/certs/
 		
-	sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
+			sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
 
-	LD_LIBRARY_PATH=/opt/esgf/python/lib:/opt/esgf/python/lib/python2.7:/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server
-	quotedldpath=`echo "$LD_LIBRARY_PATH"|sed 's/[./*?|"]/\\\\&/g'`
-	quotedwsgipath=`echo "/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server/mod_wsgi-py27.so"|sed 's/[./*?|"]/\\\\&/g'`
-	sed -i "s/\(.*\)LD_LIBRARY_PATH=placeholderldval\(.*\)/\1LD_LIBRARY_PATH=$quotedldpath\2/" etc/init.d/nm-httpd;
-	sed -i "s/\(.*\)LoadModule wsgi_module placeholder_so\(.*\)/\1LoadModule wsgi_module $quotedwsgipath\2/" etc/httpd/conf/nm-httpd.conf;
-
-	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
-	cp etc/init.d/nm-httpd /etc/init.d/
-	popd; popd;
+			LD_LIBRARY_PATH=/opt/esgf/python/lib:/opt/esgf/python/lib/python2.7:/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server
+			quotedldpath=`echo "$LD_LIBRARY_PATH"|sed 's/[./*?|"]/\\\\&/g'`
+			quotedwsgipath=`echo "/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server/mod_wsgi-py27.so"|sed 's/[./*?|"]/\\\\&/g'`
+			sed -i "s/\(.*\)LD_LIBRARY_PATH=placeholderldval\(.*\)/\1LD_LIBRARY_PATH=$quotedldpath\2/" etc/init.d/nm-httpd;
+			sed -i "s/\(.*\)LoadModule wsgi_module placeholder_so\(.*\)/\1LoadModule wsgi_module $quotedwsgipath\2/" etc/httpd/conf/nm-httpd.conf;
+			cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
+			cp etc/init.d/nm-httpd /etc/init.d/
+			popd; popd;
+	else
+		popd; popd
+		mystr=''; while read ln; do mystr=${mystr}\\n\\t"$ln"; done <nm-httpconf-lines
+		quotedmystr=`echo $mystr|sed 's/[./*?|#%!^]/\\\\&/g'`
+		sed -i "s/\#nm-http rules go here/\#nm-http rules go here\\n\\t\#nm-http rules start here$quotedmystr/" /etc/httpd/conf/esgf-httpd.conf 
+	fi
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
 	quotedinstdir=`echo $INST_DIR|sed 's/[./*?|#\t]/\\\\&/g'`

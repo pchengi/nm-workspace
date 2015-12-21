@@ -13,6 +13,8 @@ if env|grep NO_ESGF >/dev/null; then
 			rm -rf /etc/certs
 			rm -rf /opt/esgf
 			rm -rf /usr/local/esgf-nodemgr-doc
+			rm -f /etc/httpd/conf/nm-httpd.conf
+			rm -f /etc/init.d/nm-httpd
 		fi
 	fi
 else
@@ -26,10 +28,9 @@ else
 	rm -f /esg/log/esgf_nm_dj.log
 	rm -f /esg/log/esgfnmd.out.log
 	rm -f /esg/log/esgf_nm.log
-	rm -f /etc/httpd/conf/nm-httpd.conf
-	rm -f /etc/init.d/nm-httpd
 	rm -f /usr/local/bin/esgf-nm-ctl
 	rm -f /tmp/esgf-db-metrics
 	rm -rf /esg/tasks
+	sed -i '/\#nm-http rules go here/,/\#nm-http rules end here/d' /etc/httpd/conf/esgf-httpd.conf
 fi
 

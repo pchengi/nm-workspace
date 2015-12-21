@@ -1,0 +1,13 @@
+RewriteCond %{REQUEST_URI} !^/esgf-nm(.*)$
+WSGIDaemonProcess esgfnm python-path=/opt/esgf/virtual/python/lib/python2.7/site-packages:/usr/local/esgf-nodemgr-doc/code/server user=apache group=apache threads=5
+WSGIScriptAlias /esgf-nm /usr/local/esgf-nodemgr-doc/code/server/nodemgr/apache/django.wsgi
+\\t<Directory /usr/local/esgf-nodemgr-doc/code/server/nodemgr/apache>
+\\t\\tOrder allow,deny
+\\t\\tAllow from all
+\\t\\tAllowOverride None
+\\t</Directory>
+\\t<Location /esgf-nm>
+\\t\\tWSGIProcessGroup esgfnm
+\\t\\tWSGIApplicationGroup %{GLOBAL}
+\\t</Location>
+#nm-http rules end here
