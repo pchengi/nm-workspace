@@ -154,7 +154,7 @@ setup_nm_conf(){
 	quotedldpath=`echo "$LD_LIBRARY_PATH"|sed 's/[./*?|"]/\\\\&/g'`
 	quotedwsgipath=`echo "/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server/mod_wsgi-py27.so"|sed 's/[./*?|"]/\\\\&/g'`
 	sed -i "s/\(.*\)LD_LIBRARY_PATH=placeholderldval\(.*\)/\1LD_LIBRARY_PATH=$quotedldpath\2/" etc/init.d/nm-httpd;
-	sed -i "s/\(.*\)LoadModule wsgi_module placeholder_so\(.*\)/\1LoadModule wsgi_module $quotedwsgipath\2/" etc/httpd/conf/esgf-httpd.conf;
+	sed -i "s/\(.*\)LoadModule wsgi_module placeholder_so\(.*\)/\1LoadModule wsgi_module $quotedwsgipath\2/" etc/httpd/conf/nm-httpd.conf;
 
 	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
 	cp etc/init.d/nm-httpd /etc/init.d/
