@@ -134,6 +134,7 @@ setup_apache_frontend(){
 	chkconfig --levels 345 httpd off
 	popd; popd
 	rm -rf /root/apache_frontend
+
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
 	quotedinstdir=`echo $INST_DIR|sed 's/[./*?|#\t]/\\\\&/g'`
@@ -161,12 +162,16 @@ setup_apache_frontend(){
 	touch /esg/log/esgfnmd.err.log
 	touch /esg/config/nm.properties
 	touch /esg/config/registration.xml
+	touch /esg/config/timestore
+
 
 	chown nodemgr:nodemgr /esg/log/esgf_nm.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.out.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.err.log
 	chown nodemgr:nodemgr /esg/config/nm.properties
 	chown nodemgr:nodemgr /esg/config/registration.xml
+	chown nodemgr:nodemgr /esg/config/timestore
+	chmod 777 /esg/tasks
 	chown nodemgr:nodemgr $NM_DIR/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
