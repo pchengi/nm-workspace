@@ -15,7 +15,6 @@ if env|grep NO_ESGF >/dev/null; then
 			sed -i s/'PCMDI11\.LLNL\.GOV'/$quotedhst/g /esg/config/esgf.properties
 			echo 0 >/esg/config/config_type
 		fi
-		cp esgf_nodemgr_map.json /esg/config/
 		setup_ca
 		setup_apache_frontend
 		rm -rf apache_frontend
@@ -26,3 +25,6 @@ else
 fi
 bash nm-prereqsetup.sh
 setup_nm_conf
+if [ ! -s /esg/config/esgf_nodemgr_map.json ]; then
+	cp esgf_nodemgr_map.json /esg/config/
+fi
