@@ -135,7 +135,8 @@ setup_nm_conf(){
 		pushd apache-frontend
 		git checkout nm;
 	else
-		pushd /root/apache_frontend/apache-frontend;
+		pushd /root/apache_frontend
+		pushd apache-frontend;
 		git checkout nm;
 		git pull;
 	fi
@@ -148,6 +149,13 @@ setup_nm_conf(){
 	cp etc/certs/esgf-ca-bundle.crt /etc/certs/
 		
 	sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
+
+	LD_LIBRARY_PATH=/opt/esgf/python/lib:/opt/esgf/python/lib/python2.7:/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server
+	quotedldpath=`echo "$LD_LIBRARY_PATH"|sed 's/[./*?|"]/\\\\&/g'`
+	quotedwsgipath=`echo "/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server/mod_wsgi-py27.so"|sed 's/[./*?|"]/\\\\&/g'`
+	sed -i "s/\(.*\)LD_LIBRARY_PATH=placeholderldval\(.*\)/\1LD_LIBRARY_PATH=$quotedldpath\2/" etc/init.d/nm-httpd;
+	sed -i "s/\(.*\)LoadModule wsgi_module placeholder_so\(.*\)/\1LoadModule wsgi_module $quotedwsgipath\2/" etc/httpd/conf/esgf-httpd.conf;
+
 	cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
 	cp etc/init.d/nm-httpd /etc/init.d/
 	popd; popd;
@@ -157,7 +165,12 @@ setup_nm_conf(){
 	NM_DIR=$INST_DIR/esgf-nodemgr-doc/code
 	PREFIX=__prefix__
 	pushd $INST_DIR
-	git clone https://github.com/pchengi/esgf-nodemgr-doc.git
+	if [ ! -d esgf-nodemgr-doc ]; then
+		git clone https://github.com/pchengi/esgf-nodemgr-doc.git
+	else
+		pushd esgf-nodemgr-doc && git pull;
+		popd
+	fi
 	popd
 	sedcmd="sed s/$PREFIX/$quotedinstdir/"
 	$sedcmd $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/bin/esgf-nm-ctl
