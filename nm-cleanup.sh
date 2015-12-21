@@ -29,7 +29,7 @@ else
 	rm -f /etc/httpd/conf/nm-httpd.conf
 	rm -f /etc/init.d/nm-httpd
 	rm -f /usr/local/bin/esgf-nm-ctl
-	rm -f esgf-db-metrics
+	rm -f /tmp/esgf-db-metrics
 	rm -rf /esg/tasks
 fi
 
