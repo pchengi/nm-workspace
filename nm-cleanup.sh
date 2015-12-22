@@ -20,7 +20,7 @@ if env|grep NO_ESGF >/dev/null; then
 else
 	echo "There IS ESGF. Tread with care.";
 	service esgf-httpd stop
-	sed -i '/\#nm-http rules go here/,/\#nm-http rules end here/d' /etc/httpd/conf/esgf-httpd.conf
+	sed -i '/\#nm-http rules start here/,/\#nm-http rules end here/d' /etc/httpd/conf/esgf-httpd.conf
 	service esgf-httpd start
 	rm -f /esg/config/esgf_nodemgr_map.json
 	rm -f /esg/config/nm.properties
