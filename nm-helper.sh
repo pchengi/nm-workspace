@@ -124,7 +124,7 @@ setup_apache_frontend(){
 	cp wsgi/demo/* /opt/esgf/flaskdemo/demo
 	chown -R apache:apache /opt/esgf/flaskdemo/demo
 	chkconfig --levels 345 httpd off
-	popd; popd
+	popd; popd;
 }
 setup_nm_conf(){
 
@@ -160,6 +160,7 @@ setup_nm_conf(){
 			cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
 			cp etc/init.d/nm-httpd /etc/init.d/
 			popd; popd;
+		fi
 	else
 		popd; popd
 		mystr=''; while read ln; do mystr=${mystr}\\n\\t"$ln"; done <nm-httpconf-lines
