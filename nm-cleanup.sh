@@ -1,14 +1,14 @@
 #!/bin/bash
 
-service nm-httpd stop
 /usr/local/bin/esgf-nm-ctl stop
 
 if env|grep NO_ESGF >/dev/null; then
 	if [ $NO_ESGF -eq 1 ]; then
 		echo "Explicitly set to NO ESGF";
-		rm -rf /esg
+		service nm-httpd stop
 		if [ "$1" = "full" ]; then
 			yum -y remove postgresql-devel postgresql postgresql-server postgresql-libs
+			rm -rf /esg
 			rm -rf /etc/tempcerts
 			rm -rf /etc/certs
 			rm -rf /opt/esgf
@@ -19,6 +19,9 @@ if env|grep NO_ESGF >/dev/null; then
 	fi
 else
 	echo "There IS ESGF. Tread with care.";
+	service esgf-httpd stop
+	sed -i '/\#nm-http rules go here/,/\#nm-http rules end here/d' /etc/httpd/conf/esgf-httpd.conf
+	service esgf-httpd start
 	rm -f /esg/config/esgf_nodemgr_map.json
 	rm -f /esg/config/nm.properties
 	rm -f /esg/config/registration.xml
@@ -31,6 +34,5 @@ else
 	rm -f /usr/local/bin/esgf-nm-ctl
 	rm -f /tmp/esgf-db-metrics
 	rm -rf /esg/tasks
-	sed -i '/\#nm-http rules go here/,/\#nm-http rules end here/d' /etc/httpd/conf/esgf-httpd.conf
 fi
 
