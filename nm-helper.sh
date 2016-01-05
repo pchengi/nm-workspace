@@ -192,6 +192,8 @@ setup_nm_conf(){
 	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
 	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
 	adduser nodemgr
+	usermod -G tomcat nodemgr
+
 	mkdir -p /esg/log /esg/tasks /esg/config
 	touch /esg/log/django.log
 	touch /esg/log/esgf_nm.log
@@ -200,17 +202,20 @@ setup_nm_conf(){
 	touch /esg/log/esgfnmd.err.log
 	touch /esg/config/nm.properties
 	touch /esg/config/registration.xml
-	touch /esg/config/timestore
+
+	wget -O /esg/config/timestamp http://aims1.llnl.gov/nm/timestamp
+
 	chown nodemgr:nodemgr /esg/log/esgf_nm.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.out.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.err.log
 	chown nodemgr:nodemgr /esg/config/nm.properties
 	chown nodemgr:nodemgr /esg/config/registration.xml
-	chown nodemgr:nodemgr /esg/config/timestore
+	chown nodemgr:nodemgr /esg/config/timestamp
 	chmod 777 /esg/tasks
 	chown nodemgr:nodemgr $NM_DIR/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
+	chmod g+r /esg/config/.esg_pg_pass
 	#rm -rf /root/apache_frontend
 
 }
