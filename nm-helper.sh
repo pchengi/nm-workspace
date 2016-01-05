@@ -203,7 +203,7 @@ setup_nm_conf(){
 	touch /esg/config/nm.properties
 	touch /esg/config/registration.xml
 
-	wget -O /esg/config/timestamp http://aims1.llnl.gov/nm/timestamp
+	wget -O /esg/config/timestamp http://aims1.llnl.gov/nm-cfg/timestamp
 
 	chown nodemgr:nodemgr /esg/log/esgf_nm.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.out.log
