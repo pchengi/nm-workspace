@@ -164,10 +164,12 @@ setup_nm_conf(){
 	else
 		popd; popd
 		mystr=''; while read ln; do mystr=${mystr}\\n\\t"$ln"; done <nm-httpconf-lines
-		quotedmystr=`echo $mystr|sed 's/[./*?|#%!^]/\\\\&/g'`
-		sed -i "s/\#nm-http rules go here/\#nm-http rules go here\\n\\t\#nm-http rules start here$quotedmystr/" /etc/httpd/conf/esgf-httpd.conf
 		quotedrradd=`echo "RewriteCond %{REQUEST_URI} !^/esgf-nm(.*)$"|sed 's/[./*?|#%!^]/\\\\&/g'`;
 		sed -i "s/\(RewriteRule.*\)/$quotedrradd\\n    \1/" /etc/httpd/conf/esgf-httpd.conf
+
+		quotedmystr=`echo $mystr|sed 's/[./*?|#%!^]/\\\\&/g'`
+		sed -i "s/\#nm-http rules go here/\#nm-http rules go here\\n\\t\#nm-http rules start here$quotedmystr/" /etc/httpd/conf/esgf-httpd.conf
+
 	fi
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
