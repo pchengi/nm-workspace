@@ -215,7 +215,10 @@ setup_nm_conf(){
 	chown nodemgr:nodemgr $NM_DIR/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
-	chmod g+r /esg/config/.esg_pg_pass
+	
+	if [ -z $NO_ESGF ] ; then
+	    chmod g+r /esg/config/.esg_pg_pass
+	fi
 	#rm -rf /root/apache_frontend
 
 }
