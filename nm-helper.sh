@@ -204,6 +204,7 @@ setup_nm_conf(){
 	touch /esg/config/registration.xml
 
 	wget -O /esg/config/timestamp http://aims1.llnl.gov/nm-cfg/timestamp
+	wget -O /esg/config/esgf_supernodes_list.json http://aims1.llnl.gov/nm-cfg/demonet/esgf_supernodes_list.json
 
 	chown nodemgr:nodemgr /esg/log/esgf_nm.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.out.log
@@ -211,6 +212,7 @@ setup_nm_conf(){
 	chown nodemgr:nodemgr /esg/config/nm.properties
 	chown nodemgr:nodemgr /esg/config/registration.xml
 	chown nodemgr:nodemgr /esg/config/timestamp
+	chown nodemgr:nodemgr /esg/config/esgf_supernodes_list.json
 	chmod 777 /esg/tasks
 	chown nodemgr:nodemgr $NM_DIR/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
