@@ -143,6 +143,10 @@ setup_nm_conf(){
 
 	if env|grep NO_ESGF >/dev/null; then
 		if [ $NO_ESGF -eq 1 ]; then
+if [ -z $FED_NAME ] ; then
+
+    FED_NAME=demonet
+fi
 			tmpservername='placeholder.fqdn'
 			servername=`hostname -f`;
 			quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
@@ -170,6 +174,13 @@ setup_nm_conf(){
 		quotedmystr=`echo $mystr|sed 's/[./*?|#%!^]/\\\\&/g'`
 		sed -i "s/\#nm-http rules go here/\#nm-http rules go here\\n\\t\#nm-http rules start here$quotedmystr/" /etc/httpd/conf/esgf-httpd.conf
 
+		peergroup=`grep node.peer.group /esg/config/esgf.properties | cut -d'=' -f 2`
+		if [ peergroup == "esgf-demo" ] ; then
+		    FED_NAME = "demonet"
+		    else
+		    FED_NAME = $peergroup
+		fi
+ 
 	fi
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
@@ -204,7 +215,12 @@ setup_nm_conf(){
 	touch /esg/config/registration.xml
 
 	wget -O /esg/config/timestamp http://aims1.llnl.gov/nm-cfg/timestamp
-	wget -O /esg/config/esgf_supernodes_list.json http://aims1.llnl.gov/nm-cfg/demonet/esgf_supernodes_list.json
+
+
+
+
+
+	wget -O /esg/config/esgf_supernodes_list.json http://aims1.llnl.gov/nm-cfg/$FED_NAME/esgf_supernodes_list.json
 
 	chown nodemgr:nodemgr /esg/log/esgf_nm.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.out.log

@@ -20,6 +20,7 @@ if env|grep NO_ESGF >/dev/null; then
 else
 	echo "There IS ESGF. Tread with care.";
 	service esgf-httpd stop
+  
 	sed -i '/\#nm-http rules start here/,/\#nm-http rules end here/d' /etc/httpd/conf/esgf-httpd.conf
 	sed -i "/esgf-nm/d" /etc/httpd/conf/esgf-httpd.conf
 	service esgf-httpd start
@@ -37,3 +38,4 @@ else
 	rm -rf /esg/tasks
 fi
 
+rm -rf /root/apache-frontend /root/apache_frontend
