@@ -176,9 +176,9 @@ fi
 
 		peergroup=`grep node.peer.group /esg/config/esgf.properties | cut -d'=' -f 2`
 		if [ peergroup == "esgf-demo" ] ; then
-		    FED_NAME = "demonet"
+		    FED_NAME="demonet"
 		    else
-		    FED_NAME = $peergroup
+		    FED_NAME=$peergroup
 		fi
  
 	fi
