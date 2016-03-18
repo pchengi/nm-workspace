@@ -203,8 +203,8 @@ fi
 	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
 	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
 	adduser nodemgr
-	usermod -G tomcat nodemgr
-
+	usermod -a -G tomcat nodemgr
+        usermod -a -G apache nodemgr
 	mkdir -p /esg/log /esg/tasks /esg/config
 	touch /esg/log/django.log
 	touch /esg/log/esgf_nm.log
@@ -237,6 +237,11 @@ fi
 	if [ -z $NO_ESGF ] ; then
 	    chmod g+r /esg/config/.esg_pg_pass
 	fi
+	
+	python /usr/local/esgf-nodemgr-doc/code/server/gen_nodemap.py
+	chmod 755 /esg/config/esgf_nodemgr_map.json
+	chown nodemgr:apache /esg/config/esgf_nodemgr_map.json
+	
 	#rm -rf /root/apache_frontend
 
 }
