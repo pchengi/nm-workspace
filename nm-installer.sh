@@ -25,7 +25,8 @@ else
 fi
 bash nm-prereqsetup.sh
 setup_nm_conf
-if [ ! -s /esg/config/esgf_nodemgr_map.json ]; then
-	cp esgf_nodemgr_map.json /esg/config/
-	chown nodemgr:nodemgr /esg/config/esgf_nodemgr_map.json
-fi
+
+python /usr/local/esgf-nodemgr-doc/code/server/gen_nodemap.py
+chown nodemgr:nodemgr /esg/config/esgf_nodemgr_map.json
+chmod a+r /esg/config/esgf_nodemgr_map.json
+
