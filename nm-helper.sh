@@ -237,7 +237,7 @@ setup_nm_conf(){
 	pushd $NM_DIR/server
 	
 
-	fqdn=`grep esgf.host /esg/config/esgf.properties | cut -d'=' -f 2`
+	fqdn=`grep esgf.host= /esg/config/esgf.properties | cut -d'=' -f 2`
 
 	cmd="python gen_nodemap.py $NM_INIT $fqdn"
 	echo $cmd
