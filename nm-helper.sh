@@ -233,11 +233,14 @@ setup_nm_conf(){
 	    chmod g+r /esg/config/.esg_pg_pass
 	fi
 	#rm -rf /root/apache_frontend
-	pushd $NM_DIR/code/server
+	pushd $NM_DIR/server
 	
 
 	fqdn=`grep esgf.host /esg/config/esgf.properties | cut -d'=' -f 2`
-	python gen_nodemap.py $NM_INIT $fqdn
+
+	cmd="python gen_nodemap.py $NM_INIT $fqdn"
+	echo $cmd
+	$cmd
 	popd
 
 }
