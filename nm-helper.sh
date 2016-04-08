@@ -191,8 +191,9 @@ setup_nm_conf(){
 	if [ ! -d esgf-nodemgr-doc ]; then
 		git clone https://github.com/pchengi/esgf-nodemgr-doc.git
 	else
-		pushd esgf-nodemgr-doc && git pull;
-		popd
+	    export GIT_SSL_NO_VERIFY=true
+	    pushd esgf-nodemgr-doc && git pull;
+	    popd
 	fi
 	popd
 	sedcmd="sed s/$PREFIX/$quotedinstdir/"
