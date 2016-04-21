@@ -205,8 +205,10 @@ setup_nm_conf(){
 	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
 	adduser nodemgr
 	usermod -G tomcat nodemgr
+	usermod -G apache nodemgr
 
 	mkdir -p /esg/log /esg/tasks /esg/config
+
 	touch /esg/log/django.log
 	touch /esg/log/esgf_nm.log
 	touch /esg/log/esgf_nm_dj.log
