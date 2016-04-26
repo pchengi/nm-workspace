@@ -204,8 +204,8 @@ setup_nm_conf(){
 	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
 	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
 	adduser nodemgr
-	usermod -G tomcat nodemgr
-	usermod -G apache nodemgr
+	usermod -a -G tomcat nodemgr
+	usermod -a -G apache nodemgr
 
 	mkdir -p /esg/log /esg/tasks /esg/config
 
