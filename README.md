@@ -1,6 +1,6 @@
 # nm-workspace
 
-How to install the node manager (unitl we integrate it into the installer)
+How to install the node manager (unitl we integrate it into the installer) --  4, 6, 7 are put into /usr/local/bin (cd to that and prepend ./ or add it to your path)
 
   1) Install ESGF – the choice of peer group is now crucial
 
@@ -29,4 +29,4 @@ How to install the node manager (unitl we integrate it into the installer)
 
       For now the name of the project isn't relevant, but might be in the future when the node manager manages configurations for "virtual organizations"
 
-4, 6, 7 are put into /usr/local/bin
+
