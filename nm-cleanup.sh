@@ -23,8 +23,9 @@ else
   
 	sed -i '/\#nm-http rules start here/,/\#nm-http rules end here/d' /etc/httpd/conf/esgf-httpd.conf
 	sed -i "/esgf-nm/d" /etc/httpd/conf/esgf-httpd.conf
-	service esgf-httpd start
+
 	rm -f /esg/config/esgf_nodemgr_map.json
+	rm -f /esg/config/esgf_supernodes_list.json
 	rm -f /esg/config/nm.properties
 	rm -f /esg/config/registration.xml
 	rm -f /esg/config/timestore
