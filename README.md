@@ -29,4 +29,14 @@ How to install the node manager (unitl we integrate it into the installer) --  4
 
       For now the name of the project isn't relevant, but might be in the future when the node manager manages configurations for "virtual organizations"
 
+Known issue with ESGF v2.3.8 
+
+esg-node version 2.3.8 automatically rewrites the esgf-httpd.conf file on a restart (fortunately after backing up the previous version)
+To restart the node manager after "esg-node restart" do the following (as root)
+
+    cd /etc/httpd/conf
+    cp esgf-httpd.conf.bck esgf-httpd.conf
+    service esgf-httpd restart
+    
+
 
