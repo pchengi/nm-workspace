@@ -32,11 +32,7 @@ How to install the node manager (unitl we integrate it into the installer) --  4
 Known issue with ESGF v2.3.8 
 
 esg-node version 2.3.8 automatically rewrites the esgf-httpd.conf file on a restart (fortunately after backing up the previous version)
-To restart the node manager after "esg-node restart" do the following (as root)
-
-    cd /etc/httpd/conf
-    cp esgf-httpd.conf.bck esgf-httpd.conf
-    service esgf-httpd restart
+You can remedy this by commenting "#update_apache_conf" on line 5223 of esg-node 
     
 
 
