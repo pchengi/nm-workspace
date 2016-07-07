@@ -237,9 +237,8 @@ setup_nm_conf(){
 	    chmod g+r /esg/config/.esg_pg_pass
 	fi
 	
-	python /usr/local/esgf-nodemgr-doc/code/server/gen_nodemap.py
-	chmod 755 /esg/config/esgf_nodemgr_map.json
-	chown nodemgr:apache /esg/config/esgf_nodemgr_map.json
+
+
 	
 	#rm -rf /root/apache_frontend
 	pushd $NM_DIR/server
@@ -250,6 +249,9 @@ setup_nm_conf(){
 	cmd="python gen_nodemap.py $NM_INIT $fqdn"
 	echo $cmd
 	$cmd
+	chmod 755 /esg/config/esgf_nodemgr_map.json
+	chown nodemgr:apache /esg/config/esgf_nodemgr_map.json
+
 	popd
 
 }
