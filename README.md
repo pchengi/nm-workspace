@@ -25,8 +25,18 @@ How to install the node manager (unitl we integrate it into the installer) --  4
   8) If any problems check logs either in /esg/logs or /var/log/httpd/error_log
 
   9) If you are running a membernode:  
-       python /usr/local/esgf-nodemgr-doc/code/server/member_node_cmd.py add <project> 0
+       python /usr/local/esgf-nodemgr-doc/code/server/member_node_cmd.py add "project" 0
 
-      For now the name of the project isn't relevant, but might be in the future when the node manager manages configurations for "virtual organizations"
+      For now the name of the project that the node supports isn't relevant, but might be in the future when the node manager manages configurations for "virtual organizations"
+
+Known issue with ESGF v2.3.8 
+
+esg-node version 2.3.8 automatically rewrites the esgf-httpd.conf file on a restart (fortunately after backing up the previous version)
+To restart the node manager after "esg-node restart" do the following (as root)
+
+    cd /etc/httpd/conf
+    cp esgf-httpd.conf.bck esgf-httpd.conf
+    service esgf-httpd restart
+    
 
 
