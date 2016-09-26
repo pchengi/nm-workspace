@@ -1,38 +1,40 @@
 # nm-workspace
 
-How to install the node manager (unitl we integrate it into the installer) --  4, 6, 7 are put into /usr/local/bin (cd to that and prepend ./ or add it to your path)
+How to install the node manager (unitl we integrate it into the installer)
 
   1) Install ESGF – the choice of peer group is now crucial
 
-    A)  If in a private vm environment using the demonet named instances, use esgf-demo as your peer group
+    A)  If in a private vm environment using the demonet named instances, use esgf-demo as your p\
+eer group
 
-    B)  If on an open node out on internet to participate in the test federation, use esgf-test as your peer group (confirm its set in esgf.properties)
+    B)  If on an open node out on internet to participate in the test federation, use esgf-test a\
+s your peer group (confirm its set in esgf.properties)
 
-          i) When you’re ready to run a test node as a supernode, I’ll need to update the supernode list on aims1 with the fqdn - contact Sasha (ames4@llnl.gov).   
+          i) When you’re ready to run a test node as a supernode, I’ll need to update the superno\
+de list on aims1 with the fqdn - contact Sasha (ames4@llnl.gov).
+    C)  A transistion to esgf-prod is TBD
 
   2) git clone the nm-workspace repo
 
-  3) bash nm-installer.sh
+  3) Strongly recommended to back up your current esgf installation in case anything goes wrong. \
+ The most crucial file to back up is /etc/httpd/conf/esgf-httpd.conf
 
-  4) esg-node restart
+  4) bash nm-installer.sh
 
-  5)  curl http://localhost/esgf-nm  - should work
+The control files referenced in steps 5, 7, 8 are put into /usr/local/bin (path assumed)
 
-  6) esgf-nm-ctl start
+  5) esg-node restart
 
-  7) esgf-nm-ctl status – should keep running
+  6) curl http://localhost/esgf-nm  - should work  (if doesn't there's a manual setup)
 
-  8) If any problems check logs either in /esg/logs or /var/log/httpd/error_log
+  7) esgf-nm-ctl start
 
-  9) If you are running a membernode:  
-       python /usr/local/esgf-nodemgr-doc/code/server/member_node_cmd.py add "project" 0
+  8) esgf-nm-ctl status – should keep running
 
-      For now the name of the project that the node supports isn't relevant, but might be in the future when the node manager manages configurations for "virtual organizations"
+  9) If any problems check logs either in /esg/logs or /var/log/httpd/error_log
 
-Known issue with ESGF v2.3.8 
+  10)  If you are running a membernode:
+       python /usr/local/esgf-nodemgr-doc/code/server/member_node_cmd.py add <project> 0
 
-esg-node version 2.3.8 automatically rewrites the esgf-httpd.conf file on a restart (fortunately after backing up the previous version)
-You can remedy this by commenting "#update_apache_conf" on line 5223 of esg-node 
-    
-
-
+      For now the name of the project isn't relevant, but might be in the future when the node ma\
+nager manages configurations for "virtual organizations"
