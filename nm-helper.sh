@@ -205,6 +205,7 @@ setup_nm_conf(){
 	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
 	adduser nodemgr
 	usermod -a -G tomcat nodemgr
+
 	usermod -a -G apache nodemgr
 
 	mkdir -p /esg/log /esg/tasks /esg/config
@@ -235,6 +236,10 @@ setup_nm_conf(){
 	if [ -z $NO_ESGF ] ; then
 	    chmod g+r /esg/config/.esg_pg_pass
 	fi
+	
+
+
+	
 	#rm -rf /root/apache_frontend
 	pushd $NM_DIR/server
 	
@@ -244,6 +249,9 @@ setup_nm_conf(){
 	cmd="python gen_nodemap.py $NM_INIT $fqdn"
 	echo $cmd
 	$cmd
+	chmod 755 /esg/config/esgf_nodemgr_map.json
+	chown nodemgr:apache /esg/config/esgf_nodemgr_map.json
+
 	popd
 
 }
