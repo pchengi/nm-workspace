@@ -223,8 +223,8 @@ setup_nm_conf(){
 	chown nodemgr:nodemgr /esg/log/esgf_nm.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.out.log
 	chown nodemgr:nodemgr /esg/log/esgfnmd.err.log
-	chown nodemgr:nodemgr /esg/config/nm.properties
-	chown nodemgr:nodemgr /esg/config/registration.xml
+	chown nodemgr:apache /esg/config/nm.properties
+	chown nodemgr:apache /esg/config/registration.xml
 	chown nodemgr:nodemgr /esg/config/timestamp
 	chown nodemgr:nodemgr /esg/config/esgf_supernodes_list.json
 	chmod 777 /esg/tasks
