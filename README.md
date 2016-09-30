@@ -34,5 +34,5 @@ The control files referenced in steps 5, 7, 8 are put into /usr/local/bin (path 
 
       For now the name of the project isn't relevant, but might be in the future when the node manager manages configurations for "virtual organizations"
       
-    Troubleshooting:
-    - previous versions of  esg-node automatically call "update_apache_conf".  If step (6) above does not work, comment line 5223 (or check first) of esg-node to disable the update. 
+Troubleshooting:
+ - previous versions of  esg-node automatically call "update_apache_conf".  If step (6) above does not work, comment line 5223 (or check first) of esg-node to disable the update. 
