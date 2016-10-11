@@ -196,12 +196,10 @@ setup_nm_conf(){
 	    popd
 	fi
 	popd
-	sedcmd="sed s/$PREFIX/$quotedinstdir/"
-	$sedcmd $NM_DIR/esgf-nm-ctl.tmpl > $INST_DIR/bin/esgf-nm-ctl
-	$sedcmd $NM_DIR/esgfnmd.tmpl > $NM_DIR/esgfnmd
-	NM_WSGI_DIR=$NM_DIR/server/nodemgr/apache
-	$sedcmd $NM_WSGI_DIR/wsgi.py.tmpl >  $NM_WSGI_DIR/wsgi.py
-	$sedcmd $NM_WSGI_DIR/django.wsgi.tmpl >  $NM_WSGI_DIR/django.wsgi
+
+	cp $NM_DIR/esgf-nm-ctl $INST_DIR/bin/esgf-nm-ctl
+
+
 	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
 	adduser nodemgr
 	usermod -a -G tomcat nodemgr
