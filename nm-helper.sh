@@ -133,11 +133,11 @@ setup_nm_conf(){
 		pushd /root/apache_frontend
 		git clone https://github.com/ESGF/apache-frontend.git;
 		pushd apache-frontend
-		git checkout nm;
+		git checkout nm_sec;
 	else
 		pushd /root/apache_frontend
 		pushd apache-frontend;
-		git checkout nm;
+		git checkout nm_sec;
 		git pull;
 	fi
 
@@ -179,22 +179,27 @@ setup_nm_conf(){
 	# this can be integrated into the installer
 	INST_DIR=/usr/local
 	quotedinstdir=`echo $INST_DIR|sed 's/[./*?|#\t]/\\\\&/g'`
-	NM_DIR=$INST_DIR/esgf-nodemgr-doc/code
+	NM_DIR=$INST_DIR/esgf-node-manager/src
 	PREFIX=__prefix__
 	pushd $INST_DIR
 	if [ ! -d esgf-nodemgr-doc ]; then
-		git clone https://github.com/pchengi/esgf-nodemgr-doc.git
+		git clone https://github.com/ESGF/esgf-node-manager.git
 	else
 	    export GIT_SSL_NO_VERIFY=true
-	    pushd esgf-nodemgr-doc && git pull;
+	    pushd esgf-node-manager && git pull;
 	    popd
 	fi
 	popd
 
-	cp $NM_DIR/esgf-nm-ctl $INST_DIR/bin/esgf-nm-ctl
+	pushd $NM_DIR	
+	git checkout devel
+	popd
 
 
-	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/esgfnmd
+	cp $NM_DIR/scripts/esgf-nm-ctl $INST_DIR/bin/esgf-nm-ctl
+
+
+	chmod u+x $INST_DIR/bin/esgf-nm-ctl  $NM_DIR/scripts/esgfnmd
 	adduser nodemgr
 	usermod -a -G tomcat nodemgr
 
