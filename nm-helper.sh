@@ -233,7 +233,7 @@ setup_nm_conf(){
 	chown nodemgr:nodemgr /esg/config/timestamp
 	chown nodemgr:nodemgr /esg/config/esgf_supernodes_list.json
 	chmod 777 /esg/tasks
-	chown nodemgr:nodemgr $NM_DIR/esgfnmd
+	chown nodemgr:nodemgr $NM_DIR/scripts/esgfnmd
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
 	
@@ -241,15 +241,10 @@ setup_nm_conf(){
 	    chmod g+r /esg/config/.esg_pg_pass
 	fi
 	
-
-
-	
 	#rm -rf /root/apache_frontend
-	pushd $NM_DIR/server
-	
+	pushd $NM_DIR/python/server
 
 	fqdn=`grep esgf.host= /esg/config/esgf.properties | cut -d'=' -f 2`
-
 	cmd="python gen_nodemap.py $NM_INIT $fqdn"
 	echo $cmd
 	$cmd
