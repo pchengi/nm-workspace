@@ -168,10 +168,12 @@ setup_nm_conf(){
 	else
 		popd; popd
 
+
+
 		mystr=''; while read ln; do mystr=${mystr}\\n\\t"$ln"; done <nm-httpconf-lines
 		quotedmystr=`echo $mystr|sed 's/[./*?|#%!^]/\\\\&/g'`
 
-		sed -i "s/WSGIDaemonProcess cog-site/$quotedmystr  \1/" /etc/httpd/conf/esgf-httpd.conf
+		sed -i "s/WSGIDaemonProcess\ cog\-site/$quotedmystr/" /etc/httpd/conf/esgf-httpd.conf
 
 		peergroup=`grep node.peer.group /esg/config/esgf.properties | cut -d'=' -f 2`
 		if [ $peergroup == "esgf-demo" ] ; then
