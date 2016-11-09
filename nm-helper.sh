@@ -200,6 +200,13 @@ setup_nm_conf(){
 
 	pushd $NM_DIR	
 	git checkout devel
+
+	#generate a secret key and apply to the settings
+	d=`date`
+	ho=`hostname`
+	sk=`echo $d $ho | sha256sum | awk '{print $1}'`
+
+	sed -i s/changeme/$sk src/python/server/nodemgr/nodemgr/settings.py
 	popd
 
 
