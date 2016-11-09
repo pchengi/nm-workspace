@@ -189,7 +189,7 @@ setup_nm_conf(){
 	NM_DIR=$INST_DIR/esgf-node-manager/src
 	PREFIX=__prefix__
 	pushd $INST_DIR
-	if [ ! -d esgf-nodemgr-doc ]; then
+	if [ ! -d esgf-node-manager ]; then
 		git clone https://github.com/ESGF/esgf-node-manager.git
 	else
 	    export GIT_SSL_NO_VERIFY=true
