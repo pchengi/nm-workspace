@@ -117,7 +117,7 @@ setup_apache_frontend(){
 	pushd /root/apache_frontend
 	git clone https://github.com/ESGF/apache-frontend.git;
 	pushd apache-frontend
-	git checkout nm;
+
 
 	bash setup_python.sh "na" "na"
 	mkdir -p /opt/esgf/flaskdemo/demo
