@@ -117,6 +117,7 @@ setup_apache_frontend(){
 	pushd /root/apache_frontend
 	git clone https://github.com/ESGF/apache-frontend.git;
 	pushd apache-frontend
+	git checkout nm_sec
 
 
 	bash setup_python.sh "na" "na"
@@ -129,19 +130,6 @@ setup_apache_frontend(){
 setup_nm_conf(){
 
 	servername=`hostname -f`;
-
-	if [ ! -d /root/apache_frontend/apache-frontend ]; then
-		mkdir /root/apache_frontend;
-		pushd /root/apache_frontend
-		git clone https://github.com/ESGF/apache-frontend.git;
-		pushd apache-frontend
-		git checkout nm_sec;
-	else
-		pushd /root/apache_frontend
-		pushd apache-frontend;
-		git checkout nm_sec;
-		git pull;
-	fi
 
 	if env|grep HAS_ESGF >/dev/null; then
 		if [ $HAS_ESGF -eq 1 ]; then
