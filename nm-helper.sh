@@ -128,6 +128,8 @@ setup_apache_frontend(){
 }
 setup_nm_conf(){
 
+	servername=`hostname -f`;
+
 	if [ ! -d /root/apache_frontend/apache-frontend ]; then
 		mkdir /root/apache_frontend;
 		pushd /root/apache_frontend
@@ -141,46 +143,48 @@ setup_nm_conf(){
 		git pull;
 	fi
 
-	if env|grep NO_ESGF >/dev/null; then
-		if [ $NO_ESGF -eq 1 ]; then
-		     if [ -z $FED_NAME ] ; then
+	if env|grep HAS_ESGF >/dev/null; then
+		if [ $HAS_ESGF -eq 1 ]; then
 
-			   FED_NAME=demonet
-		     fi
-			tmpservername='placeholder.fqdn'
-			servername=`hostname -f`;
-			quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
-			quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
-			cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
-			cp etc/certs/esgf-ca-bundle.crt /etc/certs/
-		
-			sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
+			popd; popd
 
-			LD_LIBRARY_PATH=/opt/esgf/python/lib:/opt/esgf/python/lib/python2.7:/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server
-			quotedldpath=`echo "$LD_LIBRARY_PATH"|sed 's/[./*?|"]/\\\\&/g'`
-			quotedwsgipath=`echo "/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server/mod_wsgi-py27.so"|sed 's/[./*?|"]/\\\\&/g'`
-			sed -i "s/\(.*\)LD_LIBRARY_PATH=placeholderldval\(.*\)/\1LD_LIBRARY_PATH=$quotedldpath\2/" etc/init.d/nm-httpd;
-			sed -i "s/\(.*\)LoadModule wsgi_module placeholder_so\(.*\)/\1LoadModule wsgi_module $quotedwsgipath\2/" etc/httpd/conf/nm-httpd.conf;
-			cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
-			cp etc/init.d/nm-httpd /etc/init.d/
-			popd; popd;
+			mystr=''; while read ln; do mystr=${mystr}\\n\\t"$ln"; done <nm-httpconf-lines
+			quotedmystr=`echo $mystr|sed 's/[./*?|#%!^]/\\\\&/g'`
+
+			sed -i "s/WSGIDaemonProcess\ cog\-site/$quotedmystr/" /etc/httpd/conf/esgf-httpd.conf
+
+			peergroup=`grep node.peer.group /esg/config/esgf.properties | cut -d'=' -f 2`
+			if [ $peergroup == "esgf-demo" ] ; then
+			    FED_NAME="demonet"
+			    else
+			    FED_NAME=$peergroup
+			fi
+
+
 		fi
 	else
-		popd; popd
 
+	    if [ -z $FED_NAME ] ; then
 
+		   FED_NAME=demonet
+	    fi
+		tmpservername='placeholder.fqdn'
 
-		mystr=''; while read ln; do mystr=${mystr}\\n\\t"$ln"; done <nm-httpconf-lines
-		quotedmystr=`echo $mystr|sed 's/[./*?|#%!^]/\\\\&/g'`
+		quotedtmpservername=`echo "$tmpservername" | sed 's/[./*?|]/\\\\&/g'`;
+		quotedservername=`echo "$servername" | sed 's/[./*?|]/\\\\&/g'`;
+		cp etc/init.d/nm-httpd.tmpl etc/init.d/nm-httpd;
+		cp etc/certs/esgf-ca-bundle.crt /etc/certs/
+	
+		sed "s/\(.*\)$quotedtmpservername\(.*\)/\1$quotedservername\2/" etc/httpd/conf/nm-httpd.conf.tmpl >etc/httpd/conf/nm-httpd.conf;
 
-		sed -i "s/WSGIDaemonProcess\ cog\-site/$quotedmystr/" /etc/httpd/conf/esgf-httpd.conf
-
-		peergroup=`grep node.peer.group /esg/config/esgf.properties | cut -d'=' -f 2`
-		if [ $peergroup == "esgf-demo" ] ; then
-		    FED_NAME="demonet"
-		    else
-		    FED_NAME=$peergroup
-		fi
+		LD_LIBRARY_PATH=/opt/esgf/python/lib:/opt/esgf/python/lib/python2.7:/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server
+		quotedldpath=`echo "$LD_LIBRARY_PATH"|sed 's/[./*?|"]/\\\\&/g'`
+		quotedwsgipath=`echo "/opt/esgf/python/lib/python2.7/site-packages/mod_wsgi/server/mod_wsgi-py27.so"|sed 's/[./*?|"]/\\\\&/g'`
+		sed -i "s/\(.*\)LD_LIBRARY_PATH=placeholderldval\(.*\)/\1LD_LIBRARY_PATH=$quotedldpath\2/" etc/init.d/nm-httpd;
+		sed -i "s/\(.*\)LoadModule wsgi_module placeholder_so\(.*\)/\1LoadModule wsgi_module $quotedwsgipath\2/" etc/httpd/conf/nm-httpd.conf;
+		cp etc/httpd/conf/nm-httpd.conf /etc/httpd/conf/
+		cp etc/init.d/nm-httpd /etc/init.d/
+		popd; popd;
  
 	fi
 	# this can be integrated into the installer
@@ -203,10 +207,11 @@ setup_nm_conf(){
 
 	#generate a secret key and apply to the settings
 	d=`date`
-	ho=`hostname`
-	sk=`echo $d $ho | sha256sum | awk '{print $1}'`
+	sk=`echo $d $servername | sha256sum | awk '{print $1}'`
 
-	sed -i s/changeme/$sk src/python/server/nodemgr/nodemgr/settings.py
+	sed -i s/changeme1/$sk src/python/server/nodemgr/nodemgr/settings.py
+
+	sed -i s/changeme2/$servername src/python/server/nodemgr/nodemgr/settings.py
 	popd
 
 
@@ -244,9 +249,10 @@ setup_nm_conf(){
 	chown apache:apache /esg/log/esgf_nm_dj.log
 	chown apache:apache /esg/log/django.log
 	
-	if [ -z $NO_ESGF ] ; then
-	    chmod g+r /esg/config/.esg_pg_pass
-	fi
+	
+
+	chmod g+r /esg/config/.esg_pg_pass
+	
 	
 	#rm -rf /root/apache_frontend
 	pushd $NM_DIR/python/server
