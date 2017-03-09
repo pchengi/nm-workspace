@@ -16,8 +16,8 @@ if [ -z $HAS_ESGF ]; then
 			sed -i s/'pcmdi11\.llnl\.gov'/`hostname`/g /esg/config/esgf.properties
 			sed -i s/'PCMDI11\.LLNL\.GOV'/$quotedhst/g /esg/config/esgf.properties
 		fi
-		if [ ! -f /esg/config/config_type ]
-			echo 0 >/esg/config/config_type
+		if [ ! -f /esg/config/config_type ] ; then
+			echo 0 >/esg/config/config_type 
 		fi
 	fi
 	setup_ca
