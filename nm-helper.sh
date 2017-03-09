@@ -152,6 +152,20 @@ setup_nm_conf(){
 		fi
 	else
 
+		if [ ! -d /root/apache_frontend/apache-frontend ]; then
+			mkdir /root/apache_frontend;
+			pushd /root/apache_frontend
+			git clone https://github.com/ESGF/apache-frontend.git;
+			pushd apache-frontend
+			git checkout nm_sec;
+		else
+			pushd /root/apache_frontend
+			pushd apache-frontend;
+			git checkout nm_sec;
+			git pull;
+		fi		
+
+
 	    if [ -z $FED_NAME ] ; then
 
 		   FED_NAME=demonet
