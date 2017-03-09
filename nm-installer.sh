@@ -8,6 +8,7 @@ if [ -z $HAS_ESGF ]; then
 	echo "Explicitly set to NO ESGF";
 	if [ ! -e /esg/config/esgf.properties ]; then
 		echo "does not exist.  Will use defaults";
+		mkdir -p /esg/config
 		cp esgf.properties /esg/config/
 		hst=`hostname -f|tr '[a-z]' '[A-Z]'`;
 		quotedhst=`echo $hst|sed 's/[./*?|]/\\\\&/g'`

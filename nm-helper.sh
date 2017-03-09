@@ -250,10 +250,11 @@ setup_nm_conf(){
 	chown apache:apache /esg/log/django.log
 	
 	
-
-	chmod g+r /esg/config/.esg_pg_pass
-	
-	
+	if [ ! -z $HAS_ESGF ] ; then
+		if [ $HAS_ESGF == 1] ; then
+			chmod g+r /esg/config/.esg_pg_pass
+		fi
+	fi
 	#rm -rf /root/apache_frontend
 	pushd $NM_DIR/python/server
 
