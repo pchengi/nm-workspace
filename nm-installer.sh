@@ -9,12 +9,16 @@ if [ -z $HAS_ESGF ]; then
 	if [ ! -e /esg/config/esgf.properties ]; then
 		echo "does not exist.  Will use defaults";
 		mkdir -p /esg/config
-		cp esgf.properties /esg/config/
-		hst=`hostname -f|tr '[a-z]' '[A-Z]'`;
-		quotedhst=`echo $hst|sed 's/[./*?|]/\\\\&/g'`
-		sed -i s/'pcmdi11\.llnl\.gov'/`hostname`/g /esg/config/esgf.properties
-		sed -i s/'PCMDI11\.LLNL\.GOV'/$quotedhst/g /esg/config/esgf.properties
-		echo 0 >/esg/config/config_type
+		if [ ! -f /esg/config/esgf.properties ] ; then
+			cp esgf.properties /esg/config/
+			hst=`hostname -f|tr '[a-z]' '[A-Z]'`;
+			quotedhst=`echo $hst|sed 's/[./*?|]/\\\\&/g'`
+			sed -i s/'pcmdi11\.llnl\.gov'/`hostname`/g /esg/config/esgf.properties
+			sed -i s/'PCMDI11\.LLNL\.GOV'/$quotedhst/g /esg/config/esgf.properties
+		fi
+		if [ ! -f /esg/config/config_type ]
+			echo 0 >/esg/config/config_type
+		fi
 	fi
 	setup_ca
 	setup_apache_frontend
