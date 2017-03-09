@@ -211,6 +211,10 @@ setup_nm_conf(){
 	d=`date`
 	sk=`echo $d $servername | sha256sum | awk '{print $1}'`
 
+	echo "current directory: " 
+	pwd
+	echo
+
 	sed -i s/changeme1/$sk python/server/nodemgr/nodemgr/settings.py
 	sed -i s/changeme2/$servername python/server/nodemgr/nodemgr/settings.py
 	popd
